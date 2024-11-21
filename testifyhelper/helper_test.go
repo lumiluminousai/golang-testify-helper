@@ -65,7 +65,7 @@ func Test_AssertExpectationsForMocks_WithoutAssertNumberOfCalls_Failure(t *testi
 	// Ensure err is not nil
 	if assert.Error(t, err) {
 		// Check the error message contains the expected message
-		expectedErrorMessage := "assert expectations failed for mock field 'Mock': Missing AssertNumberOfCalls for method 'DoSomething'.\nFAIL: 0 out of 1 expectation(s) were met.\n\tThe code you are testing needs to make 1 more call(s)"
+		expectedErrorMessage := "assert expectations failed for mock field 'Service.Mock':\nMissing AssertNumberOfCalls for method 'DoSomething'.\nFAIL: 0 out of 1 expectation(s) were met.\n\tThe code you are testing needs to make 1 more call(s).\n\tat"
 		assert.Contains(t, err.Error(), expectedErrorMessage)
 	}
 }

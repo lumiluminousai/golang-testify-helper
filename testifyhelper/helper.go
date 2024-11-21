@@ -26,6 +26,7 @@ func RunTest(testFunc TestFunc) func(t *testing.T) {
 // MockTestingT is a custom implementation of TestingT that captures errors
 type MockTestingT struct {
 	Errors []string
+	Logs   []string
 }
 
 func (m *MockTestingT) Errorf(format string, args ...interface{}) {
@@ -35,9 +36,8 @@ func (m *MockTestingT) Errorf(format string, args ...interface{}) {
 func (m *MockTestingT) FailNow() {
 	// No action needed; we are just collecting errors
 }
-
 func (m *MockTestingT) Logf(format string, args ...interface{}) {
-	// No action needed; implement if needed
+	m.Logs = append(m.Logs, fmt.Sprintf(format, args...))
 }
 
 func AssertExpectationsForMocks(t *testing.T, handler interface{}) error {
@@ -52,10 +52,10 @@ func AssertExpectationsForMocks(t *testing.T, handler interface{}) error {
 	// Dereference to access the struct
 	v = v.Elem()
 
-	return traverseFields(t, v)
+	return traverseFields(t, v, "")
 }
 
-func traverseFields(t *testing.T, v reflect.Value) error {
+func traverseFields(t *testing.T, v reflect.Value, fieldPath string) error {
 	t.Helper()
 	for i := 0; i < v.NumField(); i++ {
 		field := v.Field(i)
@@ -73,16 +73,23 @@ func traverseFields(t *testing.T, v reflect.Value) error {
 			fieldValue = fieldValue.Elem()
 		}
 
+		// Construct the current field path
+		currentFieldPath := fieldType.Name
+		if fieldPath != "" {
+			currentFieldPath = fieldPath + "." + fieldType.Name
+		}
+
 		// Check if field is of type mock.Mock
 		if fieldValue.Type() == reflect.TypeOf(mock.Mock{}) {
 			mockField := fieldValue.Addr().Interface().(*mock.Mock)
-			// Use MockTestingT to capture errors
+			// Use MockTestingT to capture errors and logs
 			mt := &MockTestingT{}
 			if !mockField.AssertExpectations(mt) {
-				// Collect errors from MockTestingT
-				errMessage := strings.Join(mt.Errors, "\n")
-				// Simplify the error message
-				err := fmt.Errorf("assert expectations failed for mock field '%s': %s", fieldType.Name, errMessage)
+				// Collect errors and logs from MockTestingT
+				messages := append(mt.Errors, mt.Logs...)
+				errMessage := strings.Join(messages, "\n")
+				// Include the full field path
+				err := fmt.Errorf("assert expectations failed for mock field '%s':\n%s", currentFieldPath, errMessage)
 				return err
 			}
 			continue
@@ -90,7 +97,7 @@ func traverseFields(t *testing.T, v reflect.Value) error {
 
 		// For structs, including embedded ones, recurse into their fields
 		if fieldValue.Kind() == reflect.Struct {
-			if err := traverseFields(t, fieldValue); err != nil {
+			if err := traverseFields(t, fieldValue, currentFieldPath); err != nil {
 				return err
 			}
 			continue
