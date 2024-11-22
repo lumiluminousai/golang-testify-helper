@@ -1,7 +1,7 @@
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/lumiluminousai/testify v0.0.0-20241122023123-b154733e1e28 h1:JeFIjAY56Bcqb4O//wL5LBewNfu49YWskyVNTxA+PV0=
-github.com/lumiluminousai/testify v0.0.0-20241122023123-b154733e1e28/go.mod h1:kuTbynQfYlUybS46tXO46100mfd8XcZ2jYZhSIBqq0E=
+github.com/lumiluminousai/testify v0.0.0-20241122030157-f4b0803851bd h1:MRXpNB79sj3BVwGVOP7dsJ+84SApWgB9L7gaOoZ5dZY=
+github.com/lumiluminousai/testify v0.0.0-20241122030157-f4b0803851bd/go.mod h1:kuTbynQfYlUybS46tXO46100mfd8XcZ2jYZhSIBqq0E=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.5.2 h1:xuMeJ0Sdp5ZMRXx/aWO6RZxdr3beISkG5/G/aIRr3pY=
