@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/lumiluminousai/testify/mock"
+	"github.com/stretchr/testify/mock"
 )
 
 type TestFunc func(t *testing.T) interface{}
