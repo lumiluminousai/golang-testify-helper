@@ -2,7 +2,7 @@ module github.com/lumiluminousai/golang-testify-helper
 
 go 1.20
 
-require github.com/lumiluminousai/testify v0.0.0-20241119150453-10e686d7e437
+require github.com/lumiluminousai/testify v0.0.0-20241122023123-b154733e1e28
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
