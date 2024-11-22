@@ -4,3 +4,5 @@ run-test:
 
 run:
 	go run cmd/main.go $(DIR)
+
+#make run DIR=<full path to golang project>
